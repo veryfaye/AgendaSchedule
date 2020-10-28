@@ -16,8 +16,6 @@
 // WHEN I refresh the page
 // THEN the saved events persist
 
-// save button to store info in local storage
-
 // display current date within #currendDay p
 $("#currentDay").text(moment().format("dddd, MMMM Do"));
 
@@ -26,7 +24,7 @@ var timeBlocks = [
   { div: $("#9am"), startTime: "09:00:00", endTime: "09:59:59" },
   { div: $("#10am"), startTime: "10:00:00", endTime: "10:59:59" },
   { div: $("#11am"), startTime: "11:00:00", endTime: "11:59:59" },
-  { div: $("#12am"), startTime: "12:00:00", endTime: "12:59:59" },
+  { div: $("#12pm"), startTime: "12:00:00", endTime: "12:59:59" },
   { div: $("#1pm"), startTime: "13:00:00", endTime: "13:59:59" },
   { div: $("#2pm"), startTime: "14:00:00", endTime: "14:59:59" },
   { div: $("#3pm"), startTime: "15:00:00", endTime: "15:59:59" },
@@ -59,4 +57,27 @@ function compareTime() {
   }
 }
 
+// save button to store info in local storage
+$("#9aSaveButton").click(function(){
+  var user = $("#9am").val();
+  localStorage.setItem("9am Text", user);
+})
+
+// function renderText(){
+  // Set the form fields to have the local stored information. Have it saved as stringify object
+  // JSON.parse(local storage name)
+  // For each item in local storage, find the text area that has the same id as the key, and set the text of the textarea to the value
+// };
+
+// function saveData(){
+  // get previous sibling id
+  // use previous sibling id as key, and get previous sibling val();
+  // update object to be stored
+  // strinigy object
+  // save to local storage
+  // renderText();
+// };
+
+
 compareTime();
+// renderText();
