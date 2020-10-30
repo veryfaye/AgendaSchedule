@@ -5,15 +5,15 @@ $("#currentDay").text(moment().format("dddd, MMMM Do"));
 
 // Array of the divs 9am-5pm to iterate in the function compareTime
 var timeBlocks = [
-  { startTime: "09:00:00", endTime: "09:59:59", id: "#x9am", text: "" },
-  { startTime: "10:00:00", endTime: "10:59:59", id: "#x10am", text: "" },
-  { startTime: "11:00:00", endTime: "11:59:59", id: "#x11am", text: "" },
-  { startTime: "12:00:00", endTime: "12:59:59", id: "#x12pm", text: "" },
-  { startTime: "13:00:00", endTime: "13:59:59", id: "#x1pm", text: "" },
-  { startTime: "14:00:00", endTime: "14:59:59", id: "#x2pm", text: "" },
-  { startTime: "15:00:00", endTime: "15:59:59", id: "#x3pm", text: "" },
-  { startTime: "16:00:00", endTime: "16:59:59", id: "#x4pm", text: "" },
-  { startTime: "17:00:00", endTime: "17:59:59", id: "#x5pm", text: "" },
+  { startTime: "09:00:00", endTime: "09:59:59", id: "#9am", text: "" },
+  { startTime: "10:00:00", endTime: "10:59:59", id: "#10am", text: "" },
+  { startTime: "11:00:00", endTime: "11:59:59", id: "#11am", text: "" },
+  { startTime: "12:00:00", endTime: "12:59:59", id: "#12pm", text: "" },
+  { startTime: "13:00:00", endTime: "13:59:59", id: "#1pm", text: "" },
+  { startTime: "14:00:00", endTime: "14:59:59", id: "#2pm", text: "" },
+  { startTime: "15:00:00", endTime: "15:59:59", id: "#3pm", text: "" },
+  { startTime: "16:00:00", endTime: "16:59:59", id: "#4pm", text: "" },
+  { startTime: "17:00:00", endTime: "17:59:59", id: "#5pm", text: "" },
 ];
 
 var format = "hh:mm:ss";
@@ -35,7 +35,7 @@ function compareTime() {
     else if (curTime.isBefore(beforeTime)) {
       $(timeBlocks[i].id).addClass("future");
     } // if the current time is before the time block update the div class to .past
-    else if (curTime.isAfter(beforeTime)) {
+    else if (curTime.isAfter(afterTime)) {
       $(timeBlocks[i].id).addClass("past");
     }
   }
@@ -63,16 +63,20 @@ function renderText() {
 }
 
 function saveData() {
-  // get previous sibling id that was edited by the user
+  // get the id of previous sibling of the button clicked, aka id of the textarea element
   var prevSibID = $(this).prev().attr("id");
   console.log("prevSibID: " + "#" + prevSibID);
-  // get previous sibling val() entered by user
+  console.log("this prev sib info: ");
+  console.log("this prev sib info: "+$(this).prev());
+  // get the value of previous sibling of the button clicked, aka text entered by user of the textarea element
   var prevSibVal = $(this).prev().val();
-  // update object to be stored
-  // go through the array of time block objects
+  console.log("prevSibVal: "+prevSibVal);
+  // update array of objects to store
+  // go through the array of time block objects, and find matching id to update the text
   for (l = 0; l < localStoreTimeBlock.length; l++) {
     // if the previous sibling ID matches the time block object id value then update the text value
     if (localStoreTimeBlock[l].id == "#" + prevSibID) {
+      console.log("something matched "+l);
       localStoreTimeBlock[l].text = prevSibVal;
     }
   }
@@ -80,7 +84,7 @@ function saveData() {
   localStorage.setItem("timeBlockData", JSON.stringify(localStoreTimeBlock));
 }
 
-// When any save button is clicked, then the saveData function is called
+// When any save button is clicked, then the user entered text is saved to local storage
 $(".saveBtn").click(saveData);
 
 compareTime(); // color code the time blocks on load
